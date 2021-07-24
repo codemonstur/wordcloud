@@ -1,13 +1,13 @@
 <project>
+    <!--
+        This is a dummy maven pom. It doesn't work for compiling. Instead Bob is used
+        for that. This file exists to make it easier to configure the project in IntelliJ.
+    -->
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.codemonstur</groupId>
     <artifactId>wordcloud</artifactId>
-    <version>1</version>
-
-    <name>${project.groupId}:${project.artifactId}</name>
-    <description>Plugin for generating a wordcloud of the source code.</description>
-    <url>https://github.com/codemonstur/wordcloud</url>
+    <version>0</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

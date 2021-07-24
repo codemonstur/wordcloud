@@ -59,7 +59,7 @@ public enum WordCloudCommand {;
             Files.walk(sourceDir).filter(Files::isRegularFile).forEach(sourceFile -> {
                 try {
                     final var words = Files.readString(sourceFile)
-                        .replaceAll("^[0-9a-zA-Z]", " ").split(" ");
+                        .replaceAll("[^0-9a-zA-Z]", " ").split(" ");
                     for (final var word : words) {
                         if (isNullOrEmpty(word)) continue;
                         map.computeIfAbsent(word.toLowerCase(), s -> new MutableInteger()).increment();

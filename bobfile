@@ -1,4 +1,6 @@
-version: 1
+plugin codemonstur/wordcloud:1
+
+version: 2
 packaging: bob-plugin
 enablePreview: false
 dependencies:
@@ -25,3 +27,7 @@ deploy
     git push && git push --tags
     echo [${PROJECT_NAME}] Creating github release
     hub release create -a target/${PROJECT_NAME}-${PROJECT_VERSION}.jar -F src/docs/releases/release-${PROJECT_VERSION}.txt ${PROJECT_NAME}-${PROJECT_VERSION}
+    version increment major
+
+test
+    wordcloud
