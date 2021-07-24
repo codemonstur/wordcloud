@@ -7,7 +7,7 @@ import java.nio.file.Paths;
 import java.util.HashMap;
 import java.util.Map;
 
-import static bobthebuildtool.services.Functions.isNullOrEmpty;
+import static wordcloud.WordCloudCommand.countWordsInFile;
 
 public class SourceTextOutput {
 
@@ -17,16 +17,10 @@ public class SourceTextOutput {
 
     private static Map<String, MutableInteger> countWords(final Path sourceDir) throws IOException {
         final var map = new HashMap<String, MutableInteger>();
-        Files.walk(sourceDir).filter(Files::isRegularFile).forEach(sourceFile -> {
-            try {
-                final var words = Files.readString(sourceFile)
-                        .replaceAll("[^0-9a-zA-Z]", " ").split(" ");
-                for (final var word : words) {
-                    if (isNullOrEmpty(word)) continue;
-                    map.computeIfAbsent(word.toLowerCase(), s -> new MutableInteger()).increment();
-                }
-            } catch (Exception e) {}
-        });
+        Files.walk(sourceDir)
+            .filter(Files::isRegularFile)
+            .filter(path -> path.toString().endsWith(".java"))
+            .forEach(path -> countWordsInFile(map, path));
         return map;
     }
 

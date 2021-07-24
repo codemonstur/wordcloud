@@ -1,6 +1,6 @@
-plugin codemonstur/wordcloud:1
+plugin codemonstur/wordcloud:2
 
-version: 2
+version: 3
 packaging: bob-plugin
 enablePreview: false
 dependencies:

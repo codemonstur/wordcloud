@@ -16,6 +16,7 @@ import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -56,18 +57,22 @@ public enum WordCloudCommand {;
     private static Map<String, MutableInteger> countWords(final Project project) throws IOException {
         final var map = new HashMap<String, MutableInteger>();
         for (final var sourceDir : project.getSourceDirectories()) {
-            Files.walk(sourceDir).filter(Files::isRegularFile).forEach(sourceFile -> {
-                try {
-                    final var words = Files.readString(sourceFile)
-                        .replaceAll("[^0-9a-zA-Z]", " ").split(" ");
-                    for (final var word : words) {
-                        if (isNullOrEmpty(word)) continue;
-                        map.computeIfAbsent(word.toLowerCase(), s -> new MutableInteger()).increment();
-                    }
-                } catch (Exception e) {}
-            });
+            Files.walk(sourceDir)
+                .filter(Files::isRegularFile)
+                .filter(path -> path.toString().endsWith(".java"))
+                .forEach(path -> countWordsInFile(map, path));
         }
         return map;
+    }
+
+    public static void countWordsInFile(final HashMap<String, MutableInteger> map, final Path sourceFile) {
+        try {
+            final var words = Files.readString(sourceFile).replaceAll("[^0-9a-zA-Z]", " ").split(" ");
+            for (final var word : words) {
+                if (isNullOrEmpty(word)) continue;
+                map.computeIfAbsent(word.toLowerCase(), s -> new MutableInteger()).increment();
+            }
+        } catch (Exception e) {}
     }
 
     private static List<WordFrequency> toList(final Map<String, MutableInteger> frequencies) {
