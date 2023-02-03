@@ -1,5 +1,5 @@
 include https://raw.githubusercontent.com/codemonstur/bobfiles/master/foss-app-github
-plugin codemonstur/wordcloud:2
+#plugin codemonstur/wordcloud:2
 
 version: 3
 packaging: bob-plugin
